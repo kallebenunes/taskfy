@@ -1,13 +1,16 @@
 import React from 'react'
 import List from '../List'
 import Container from './style'
+import {loadLists} from '../../services/api'
+
 const Board = () => {
+    const lists = loadLists();
+    
     return (
         <Container>
-            <List text="To-Do"/>
-            <List text="On progress"/>
-            <List/>
-            <List text="Done"/>
+            {lists.map(item => {
+                return <List key={item.title} data={item}/>
+            })}
         </Container>
     )
 }

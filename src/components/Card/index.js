@@ -1,13 +1,16 @@
 import React from 'react'
 import {Container, Label} from './style'
-const Card = () => {
+const Card = ({data}) => {
+    
+    console.log(data);
+
     return (
         <Container>
             <header>
-                <Label color='green'/>
+                <Label color={data.labels[0]}/>
             </header>
-            <p>Descrição de uma atividade</p>
-            <img src="https://avatars.dicebear.com/4.5/api/male/taskfy.svg" alt="" />
+            <p>{data.content}</p>
+            {data.user && <img src={data.user} alt='User' />}
 
         </Container>
     )
