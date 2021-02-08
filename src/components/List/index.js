@@ -19,9 +19,9 @@ const List = ({data}) => {
             </header>
 
             <ul>
-                {data.cards.map(item => {
+                {data.cards.map((item, index) => {
                     return (
-                        <Card key={item.id} data={item}/>
+                        <Card key={item.id} data={item} index={index}/>
                     )
                 })}            
             </ul>
