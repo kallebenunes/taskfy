@@ -27,4 +27,8 @@ export default createGlobalStyle`
     ul {
         list-style: none;
     }
+
+    p{
+        font-size: 1.5rem;
+    }
 `; 

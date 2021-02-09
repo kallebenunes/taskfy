@@ -1,13 +1,18 @@
-import React,{useRef} from 'react'
+import React,{useContext, useRef} from 'react'
 import { useDrag, useDrop } from 'react-dnd';
 import {Container, Label} from './style'
+import BoardContext from '../Board/context'
 
-const Card = ({data, index}) => {
+
+
+const Card = ({data, index, listIndex}) => {
     
     const ref = useRef();
 
+    const {move} = useContext(BoardContext)
+
     const [{isDragging}, dragRef]  = useDrag({
-        item: {type: 'CARD', index}, 
+        item: {type: 'CARD', index, listIndex}, 
         collect: monitor => ({
             isDragging: monitor.isDragging()
         })
@@ -16,11 +21,14 @@ const Card = ({data, index}) => {
     const [, dropRef] = useDrop({
         accept: 'CARD', 
         hover(item, monitor){
-
+            
             const draggedIndex = item.index
             const targetIndex = index 
+            
+            const draggedListIndex = item.listIndex
+            const targetListIndex = listIndex
 
-            if (draggedIndex === targetIndex){
+            if (draggedIndex === targetIndex && targetListIndex === draggedListIndex){
                 return null
             }
 
@@ -37,7 +45,11 @@ const Card = ({data, index}) => {
                 return;
               }
             
-            
+
+            move(targetListIndex, draggedListIndex,draggedIndex, targetIndex)
+
+            item.index = targetIndex;
+            item.listIndex = targetListIndex;
         }
     })
 
@@ -50,7 +62,6 @@ const Card = ({data, index}) => {
             </header>
             <p>{data.content}</p>
             {data.user && <img src={data.user} alt='User' />}
-            <p>{ isDragging ? 'esá movendo' : 'Não está movendo' }</p>
             </Container>
     )
 }

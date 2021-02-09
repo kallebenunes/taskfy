@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 const Container  = styled.div`
     
     flex: 0 0 320px;
@@ -27,5 +27,8 @@ const Container  = styled.div`
     ul {
         margin-top: 30px;
     }
+    ${props => props.done && css`
+        opacity: 0.6;
+    `}
 `;
 export default Container

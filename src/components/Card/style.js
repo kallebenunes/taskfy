@@ -25,7 +25,7 @@ export const Container  = styled.div`
         border: 3px dashed lightgray; 
         box-shadow: none;
         cursor: grabbing;
-        padding-top: 31px;
+        padding-top: 20px;
 
         p, img, header {
             opacity: 0;

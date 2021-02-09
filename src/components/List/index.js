@@ -4,11 +4,11 @@ import {MdAdd} from 'react-icons/md'
 import Card from '../Card'
 
 
-const List = ({data}) => {
+const List = ({data, index: listIndex}) => {
     
-
+    
     return (
-        <Container>
+        <Container done={data.done}>
             <header>
                 <h1>{data.title}</h1>
                 {data.creatable  
@@ -21,7 +21,7 @@ const List = ({data}) => {
             <ul>
                 {data.cards.map((item, index) => {
                     return (
-                        <Card key={item.id} data={item} index={index}/>
+                        <Card key={item.id} data={item} listIndex={listIndex} index={index}/>
                     )
                 })}            
             </ul>
