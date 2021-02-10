@@ -49,6 +49,12 @@ const Modal = () => {
             }, 2000)
         }
 
+        setTaskTitle('')
+        setTaskDescribe('')
+        setLabelColor('')
+        document.querySelectorAll('[data-color]').forEach((item) => {
+            item.classList.remove('selected')
+        })
     }
 
     
