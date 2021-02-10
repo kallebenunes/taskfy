@@ -4,13 +4,15 @@ import Container from './style'
 import {loadLists} from '../../services/api'
 import BoardContext from './context'
 import produce from 'immer'
+import Modal from '../Modal/index'
 
 const Board = () => {
     const data = loadLists();
     const [lists, setLists] = useState(data)
-
+    let [active, setActive] = useState(false);
+    
     function move(toList,fromList, from, to){
-        console.log(fromList, toList);
+        
         setLists(produce(lists, draft => {
             const dragged = draft[fromList].cards[from];
 
@@ -20,13 +22,34 @@ const Board = () => {
             
         }))
     }
+    
+    
+
+    function addTask(card){
+        setLists(produce(lists, draft => {
+            draft[0].cards.push(card)
+        }))
+    }
+
+    function openModal(){
+        setActive(true)
+    
+    }
+    function closeModal(){
+        setActive(false)
+    }
+
+    let context = {lists, move, openModal, closeModal, addTask, active}
+
     return (
-        <BoardContext.Provider value={{lists, move}}>
+        <BoardContext.Provider value={context}>
             <Container>
                 {lists.map((item, index) => {
                     return <List key={item.title} index={index} data={item} done={item.done}/>
                 })}
+                <Modal/>
             </Container>
+   
         </BoardContext.Provider>
     )
 }

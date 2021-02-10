@@ -9,7 +9,7 @@ const Card = ({data, index, listIndex}) => {
     
     const ref = useRef();
 
-    const {move} = useContext(BoardContext)
+    const {move,openModal} = useContext(BoardContext)
 
     const [{isDragging}, dragRef]  = useDrag({
         item: {type: 'CARD', index, listIndex}, 
@@ -47,6 +47,7 @@ const Card = ({data, index, listIndex}) => {
             
 
             move(targetListIndex, draggedListIndex,draggedIndex, targetIndex)
+    
 
             item.index = targetIndex;
             item.listIndex = targetListIndex;
@@ -56,10 +57,11 @@ const Card = ({data, index, listIndex}) => {
     dragRef(dropRef(ref))
 
     return (
-        <Container isDragging={isDragging} ref={ref}>
+        <Container isDragging={isDragging} id={`card${index}`} ref={ref} onDoubleClick={openModal}>
             <header>
                 <Label color={data.labels[0]}/>
             </header>
+            {data.title && <h1>{data.title}</h1>}
             <p>{data.content}</p>
             {data.user && <img src={data.user} alt='User' />}
             </Container>
