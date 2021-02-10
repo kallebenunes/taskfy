@@ -27,7 +27,7 @@ export const Container  = styled.div`
         cursor: grabbing;
         padding-top: 20px;
 
-        p, img, header {
+        p, img, header,h1 {
             opacity: 0;
             
         }

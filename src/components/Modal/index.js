@@ -30,14 +30,15 @@ const Modal = () => {
     function addNewTask(e){
         e.preventDefault();
         console.log(lists[0].cards);
-        let last = lists[0].cards.length + 1
         let user = `https://avatars.dicebear.com/4.5/api/male/taskfy${Math.round(Math.random() * 100)}.svg`;
+        let id = lists[0].totalCards + 1
         let card = {
-            id: last, 
+            id, 
             content: taskDesccribe,
             title: taskTitle, 
             labels: [labelColor],
-            user
+            user, 
+            
         }
         
         if(!!taskDesccribe.trim() && !!taskTitle.trim()){

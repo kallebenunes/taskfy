@@ -28,6 +28,7 @@ const Board = () => {
     function addTask(card){
         setLists(produce(lists, draft => {
             draft[0].cards.push(card)
+            draft[0].totalCards++
         }))
     }
 

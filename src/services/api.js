@@ -3,6 +3,7 @@ export function loadLists() {
       { 
         title: 'Tarefas', 
         creatable: true,
+        totalCards: 13,
         cards: [
           {
             id: 1,
