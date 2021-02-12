@@ -1,8 +1,9 @@
-import React,{useState} from 'react'
+import React,{useContext, useState} from 'react'
 import List from '../List'
 import Container from './style'
 import {loadLists} from '../../services/api'
 import BoardContext from './context'
+import GlobalContext from '../../GlobalContext'
 import produce from 'immer'
 import Modal from '../Modal/index'
 
@@ -10,7 +11,10 @@ const Board = () => {
     const data = loadLists();
     const [lists, setLists] = useState(data)
     let [active, setActive] = useState(false);
+    let [editMode, setEditMode] = useState(false)
     
+    let {setTaskDescribe, setTaskTitle, setLabelColor} = useContext(GlobalContext)
+
     function move(toList,fromList, from, to){
         
         setLists(produce(lists, draft => {
@@ -38,9 +42,13 @@ const Board = () => {
     }
     function closeModal(){
         setActive(false)
+        setEditMode(false)
+        setTaskDescribe('')
+        setTaskTitle('')
+        setLabelColor('')
     }
 
-    let context = {lists, move, openModal, closeModal, addTask, active}
+    let context = {lists,setLists , move, openModal, closeModal, addTask, active,setEditMode, editMode}
 
     return (
         <BoardContext.Provider value={context}>

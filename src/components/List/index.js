@@ -16,7 +16,7 @@ const List = ({data, index: listIndex}) => {
     }
     
     return (
-        <Container done={data.done}>
+        <Container done={data.done} id={`list${listIndex}`}>
             <header>
                 <h1>{data.title}</h1>
                 {data.creatable  

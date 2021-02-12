@@ -5,6 +5,7 @@ const Container  = styled.div`
     height: 100%;
     padding: 0 15px;
     box-sizing: border-box;
+    overflow-y: hidden;
 
      & + div {
         border-left: 1px solid #e1e1e1;

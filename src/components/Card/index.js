@@ -2,6 +2,7 @@ import React,{useContext, useRef} from 'react'
 import { useDrag, useDrop } from 'react-dnd';
 import {Container, Label} from './style'
 import BoardContext from '../Board/context'
+import GlobalContext from '../../GlobalContext';
 
 
 
@@ -9,7 +10,8 @@ const Card = ({data, index, listIndex}) => {
     
     const ref = useRef();
 
-    const {move,openModal} = useContext(BoardContext)
+    const {setTaskDescribe, setTaskTitle, setLabelColor, setCurrentList, setCurrentCard} = useContext(GlobalContext)
+    const {move,openModal, setEditMode,lists, } = useContext(BoardContext)
 
     const [{isDragging}, dragRef]  = useDrag({
         item: {type: 'CARD', index, listIndex}, 
@@ -56,8 +58,28 @@ const Card = ({data, index, listIndex}) => {
 
     dragRef(dropRef(ref))
 
+    function callModal(e){
+        let currentCard = e.currentTarget; 
+        let currentList = currentCard.parentElement.parentElement
+        let indexCurrentList = currentList.getAttribute('id').replace('list','')
+        let indexCurrentCard = currentCard.getAttribute('id').replace('card', '')
+        let currentCardObject = lists[indexCurrentList].cards[indexCurrentCard];
+        let {content, id,labels, user,title } = currentCardObject; 
+       
+        setCurrentCard(indexCurrentCard)
+        setCurrentList(indexCurrentList)
+        setTaskDescribe(content)
+        
+        title && setTaskTitle(title)
+
+        openModal()
+        setEditMode(true)
+        
+        
+    }
+
     return (
-        <Container isDragging={isDragging} id={`card${index}`} ref={ref} onDoubleClick={openModal}>
+        <Container isDragging={isDragging} id={`card${index}`} ref={ref} onDoubleClick={callModal}>
             <header>
                 <Label color={data.labels[0]}/>
             </header>

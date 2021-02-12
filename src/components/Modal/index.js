@@ -1,14 +1,15 @@
 import React,{useContext, useState} from 'react'
 import {Container, Button} from './style'
 import BoardContext from '../Board/context'
+import GlobalContext from '../../GlobalContext';
+import produce from 'immer'
+
 const Modal = () => {
 
-    let [labelColor, setLabelColor] = useState('');
-    let [taskTitle, setTaskTitle] = useState('');
-    let [taskDesccribe, setTaskDescribe] = useState('');
-    let [error, setError] = useState(false);
+    const {taskTitle, setTaskTitle, taskDescribe, setTaskDescribe, labelColor, setLabelColor, currentList, currentCard} = useContext(GlobalContext)
+    const {setLists, lists, addTask,closeModal, active: modalActive, editMode} = useContext(BoardContext);
 
-    const {lists, addTask,closeModal, active: modalActive} = useContext(BoardContext);
+    let [error, setError] = useState(false)
 
     const selectColor = (e) => {
         e.preventDefault(); 
@@ -34,14 +35,14 @@ const Modal = () => {
         let id = lists[0].totalCards + 1
         let card = {
             id, 
-            content: taskDesccribe,
+            content: taskDescribe,
             title: taskTitle, 
             labels: [labelColor],
             user, 
             
         }
         
-        if(!!taskDesccribe.trim() && !!taskTitle.trim()){
+        if(!!taskDescribe.trim() && !!taskTitle.trim()){
             addTask(card)
         } else {
             setError(true)
@@ -58,12 +59,20 @@ const Modal = () => {
         })
     }
 
-    
+    function editTask(){
+        let newCurrentCard = lists[currentList].cards[currentCard].content
+
+        // console.log(newCurrentCard)
+        setLists(produce(lists, draft => {
+            draft[currentList].cards[currentCard].content = taskDescribe
+            draft[currentList].cards[currentCard].title = taskTitle
+        }))
+    }
 
     const labelColors = ['#7159C1', '#54E1F7','#ED54F7','#F75481','#9dff00' ]
     return (
      
-            <Container active={modalActive}>
+            <Container editMode={editMode} active={modalActive}>
             <div className='modal-content'>
                     <button className='closeModal' onClick={closeModal}>X</button>
 
@@ -71,19 +80,22 @@ const Modal = () => {
 
                     <input type="text" placeholder='Título da tarefa' value={taskTitle} onChange={setValueTaskTitle}  />    
                
-                    <textarea value={taskDesccribe} onChange={setValueTaskDescribe} placeholder='Descrição da tarefa'></textarea>
+                    <textarea value={taskDescribe} onChange={setValueTaskDescribe} placeholder='Descrição da tarefa'></textarea>
 
+                    {!editMode &&
                     <div className='select-area'>
-                        {labelColors.map(item => {
-                            return (
-                          
-                                <Button data-color={item} bg={item} selected={false} onClick={selectColor}></Button>
-                            
-                            )
-                        })}
-                    </div>
+                    {labelColors.map(item => {
+                        return (
+                      
+                            <Button data-color={item} bg={item} selected={false} onClick={selectColor}></Button>
+                        
+                        )
+                    })}
+                </div>}
                     
-                    <button className='addTask' onClick={addNewTask}>Adicionar</button>
+                {editMode
+                    ? <button className='addTask' onClick={editTask}>Salvar</button>
+                    : <button className='addTask' onClick={addNewTask}>Adicionar</button>}
                     
             </div>
         </Container>
