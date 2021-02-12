@@ -35,19 +35,6 @@ export const Container  = styled.div`
             height: 40%;
             resize: none;
         }
-        
-         button.addTask {
-            background:     #7159C1;
-            color: #fff; 
-            border: none; 
-            border-radius: 5px;
-            padding: 5px 10px;
-            position: absolute; 
-            bottom: 10px;
-            right: 10px;
-            font-size: 2rem;
-            cursor: pointer;
-        }
 
         button.closeModal {
             position: absolute; 
@@ -96,6 +83,32 @@ export const Container  = styled.div`
         font-weight: 700;
         font-size: 1.2rem;
         color: red;
+    }
+
+    .edit-buttons{
+        position: absolute;
+        right: 3.2rem;
+        bottom: 15px;
+
+        button {
+            border: none; 
+            padding: 10px 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #f3f3f3;
+            border-radius: 5px;
+        }
+        button + button {
+            margin-left: 10px;
+        }
+
+        .add-task{
+            background: #7159C1;
+        }
+
+        .delete-task{
+            background: #ff6266
+        }
     }
     `;
 

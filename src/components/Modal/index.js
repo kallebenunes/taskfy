@@ -60,13 +60,20 @@ const Modal = () => {
     }
 
     function editTask(){
-        let newCurrentCard = lists[currentList].cards[currentCard].content
 
-        // console.log(newCurrentCard)
         setLists(produce(lists, draft => {
             draft[currentList].cards[currentCard].content = taskDescribe
             draft[currentList].cards[currentCard].title = taskTitle
         }))
+
+        closeModal()
+    }
+
+    function deleteTask (){
+        setLists(produce(lists, draft => {
+            draft[currentList].cards.splice(currentCard, 1)
+        }))
+        closeModal()
     }
 
     const labelColors = ['#7159C1', '#54E1F7','#ED54F7','#F75481','#9dff00' ]
@@ -93,9 +100,17 @@ const Modal = () => {
                     })}
                 </div>}
                     
-                {editMode
-                    ? <button className='addTask' onClick={editTask}>Salvar</button>
-                    : <button className='addTask' onClick={addNewTask}>Adicionar</button>}
+                <div className='edit-buttons'>
+                    {editMode 
+                         ?(
+                            <>
+                                <button className='add-task' onClick={editTask}>Salvar</button>
+                                <button className='delete-task' onClick={deleteTask}>Excluir </button>
+                            </>
+                        )
+                        : <button className='add-task' onClick={addNewTask}>Adicionar</button>
+                    }
+                </div>
                     
             </div>
         </Container>
