@@ -10,7 +10,7 @@ const Card = ({data, index, listIndex}) => {
     
     const ref = useRef();
 
-    const {setTaskDescribe, setTaskTitle, setLabelColor, setCurrentList, setCurrentCard} = useContext(GlobalContext)
+    const {setTaskDescribe, setTaskTitle, setCurrentList, setCurrentCard} = useContext(GlobalContext)
     const {move,openModal, setEditMode,lists, } = useContext(BoardContext)
 
     const [{isDragging}, dragRef]  = useDrag({
@@ -64,7 +64,7 @@ const Card = ({data, index, listIndex}) => {
         let indexCurrentList = currentList.getAttribute('id').replace('list','')
         let indexCurrentCard = currentCard.getAttribute('id').replace('card', '')
         let currentCardObject = lists[indexCurrentList].cards[indexCurrentCard];
-        let {content, id,labels, user,title } = currentCardObject; 
+        let {content,title } = currentCardObject; 
        
         setCurrentCard(indexCurrentCard)
         setCurrentList(indexCurrentList)

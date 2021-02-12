@@ -57,6 +57,8 @@ const Modal = () => {
         document.querySelectorAll('[data-color]').forEach((item) => {
             item.classList.remove('selected')
         })
+
+        closeModal()
     }
 
     function editTask(){
@@ -104,8 +106,8 @@ const Modal = () => {
                     {editMode 
                          ?(
                             <>
-                                <button className='add-task' onClick={editTask}>Salvar</button>
                                 <button className='delete-task' onClick={deleteTask}>Excluir </button>
+                                <button className='add-task' onClick={editTask}>Salvar</button>
                             </>
                         )
                         : <button className='add-task' onClick={addNewTask}>Adicionar</button>
